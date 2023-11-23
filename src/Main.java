@@ -82,6 +82,8 @@ public class Main {
         System.out.println(company + " " + num);
     }
 
+    //alen
+
     // Kraj maina - ispod pisi test kod
 
         /*for(GoogleApps t : apps){
