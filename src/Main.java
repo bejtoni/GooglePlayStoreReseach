@@ -10,7 +10,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        File inputFile = new File("src/gps1000.csv");
+        File inputFile = new File("src/velki.csv");
 
         ArrayList<GoogleApps> apps = new ArrayList<>();
 
@@ -95,16 +95,42 @@ public class Main {
 
     // 3. Top 3 developers not working for the company of the released app
     Map <String, Integer> developerAppCount = new HashMap<>();
+    ArrayList <Map.Entry<String, Integer>> developerAppCountSorted = new ArrayList<>();
 
     for(GoogleApps t : apps){
-        //splitam poslije ludog A i poredim sa company name, ako nije isto push kao key njegov id i value 1, ili povecaj ako se opet pojavi
+        try{
+            String companyName = t.getAppId().split("\\.")[1].toLowerCase().trim();
+            String mailChecker = t.getDeveloperEmail().split("@")[1].toLowerCase().split("\\.")[0].trim();
+            String devId = t.getDeveloperId();
 
-        String companyName = t.getAppId().split("\\.")[1].toLowerCase().trim();
-        String mailChecker = t.getDeveloperEmail().split("@")[1].toLowerCase().split("\\.")[0].trim();
-
-        System.out.println("comp " + companyName + " - mail : " + mailChecker);
-
+            if(!companyName.contains(mailChecker)){
+                if(!developerAppCount.containsKey(devId)){
+                    developerAppCount.put(devId, 1);
+                }
+                else{
+                    developerAppCount.put(devId, developerAppCount.get(devId) + 1);
+                }
+            }
+        }
+        catch (Exception e){
+            continue;
+        }
     }
+
+    for(Map.Entry<String, Integer> entry : developerAppCount.entrySet()){
+        developerAppCountSorted.add(entry);
+    }
+    developerAppCountSorted.sort((a, b) -> b.getValue() - a.getValue());
+
+    for(int i = 0; i < 20; i++){
+        System.out.println("DeveloperID: " + developerAppCountSorted.get(i).getKey() + " - Number of apps: " + developerAppCountSorted.get(i).getValue());
+    }
+
+    /*for(Map.Entry<String, Integer> entry : developerAppCount.entrySet()){
+        String deva = entry.getKey();
+        int numberOfApps = entry.getValue();
+        System.out.println("DeveloperID: " + deva + ", number of apps : " + numberOfApps);
+    }*/
 
 
     // Kraj maina - ispod pisi test kod

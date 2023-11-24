@@ -28,6 +28,10 @@ public class GoogleApps {
         return developerEmail;
     }
 
+    public String getDeveloperId() {
+        return developerId;
+    }
+
     @Override
     public String toString() {
         return "GoogleApps{" +
