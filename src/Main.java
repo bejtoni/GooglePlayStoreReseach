@@ -8,6 +8,8 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
+        //File inputFile = new File("src/Google Play Store Apps.csv");
+        
         File inputFile = new File("src/velki.csv");
         ArrayList<GoogleApps> apps = new ArrayList<>();
 
