@@ -1,0 +1,2 @@
+Number of apps that can be bought with 1000$ including Free apps : 2268014
+Number of apps that can be bought with 10000$ including Free apps : 2268037

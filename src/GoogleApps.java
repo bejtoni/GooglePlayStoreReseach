@@ -5,8 +5,9 @@ public class GoogleApps {
     private final String developerId;
     private final String developerEmail;
     private final Double price;
+    private final Boolean isFree;
 
-    public GoogleApps(String AppName, String AppId, String Category, Double Price, String developerId, String DeveloperEmail) {
+    public GoogleApps(String AppName, String AppId, String Category, Double Price, String developerId, String DeveloperEmail, Boolean isFree) {
 
         appName = AppName;
         appId = AppId;
@@ -14,6 +15,7 @@ public class GoogleApps {
         this.developerId = developerId;
         developerEmail = DeveloperEmail;
         price = Price;
+        this.isFree = isFree;
     }
 
     public String getCategory() {
@@ -30,6 +32,18 @@ public class GoogleApps {
 
     public String getDeveloperId() {
         return developerId;
+    }
+
+    public Boolean getFreeCheck() {
+        return isFree;
+    }
+
+    public String getAppName() {
+        return appName;
+    }
+
+    public Double getPrice() {
+        return price;
     }
 
     @Override
