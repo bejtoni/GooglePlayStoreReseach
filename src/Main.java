@@ -1,3 +1,4 @@
+//Bismilahirahmanirahim
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -5,6 +6,8 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
+    private static String mailChecker;
+
     public static void main(String[] args) {
 
         File inputFile = new File("src/gps1000.csv");
@@ -31,21 +34,24 @@ public class Main {
                     String appId = lineParts[1].trim();
                     String category = lineParts[2].trim();
                     Double price = Double.parseDouble(lineParts[9].trim());
+                    String developerId = lineParts[13].trim();
                     String developerEmail = lineParts[15].trim();
 
-                    apps.add(new GoogleApps(appName, appId, category, price, developerEmail));
+                    apps.add(new GoogleApps(appName, appId, category, price, developerId, developerEmail));
                 }
                 catch (Exception e){
                     faultyLines.add(currentLine);
                 }
 
             }
+            s1.close();
         }
         catch (Exception e){
             e.printStackTrace();
         }
 
-    // Number of apps per category
+
+    // 1. Number of apps per category
     for(GoogleApps t : apps){
         String category = t.getCategory();
 
@@ -63,32 +69,46 @@ public class Main {
             System.out.println("Category: " + category + ", number of apps : " + numberOfApps);
     }*/
 
-    // Top 100 companies with most apps
+    // 2. Top 100 companies with most apps
     Map <String, Integer> appsPerCompany = new HashMap<>();
+    ArrayList <Map.Entry<String, Integer>> appsPerCompanySorted = new ArrayList<>();
 
     for(GoogleApps t : apps){
         String companyName = t.getAppId().split("\\.")[1].toLowerCase();
 
         if(!appsPerCompany.containsKey(companyName)){
-            appsPerCompany.put(companyName,0);
+            appsPerCompany.put(companyName,1);
         }else{
             appsPerCompany.put(companyName, appsPerCompany.get(companyName) + 1);
         }
     }
 
+    // Push u Array, onda sortiraj
     for(Map.Entry<String, Integer> entry : appsPerCompany.entrySet()){
-        String company = entry.getKey();
-        Integer num = entry.getValue();
-        System.out.println(company + " " + num);
+        appsPerCompanySorted.add(entry);
+    }
+    appsPerCompanySorted.sort((a, b) -> b.getValue() - a.getValue());
+
+    /*for(int i = 0; i < 100; i++){
+        System.out.println("Company: " + appsPerCompanySorted.get(i).getKey() + " - Number of apps: " + appsPerCompanySorted.get(i).getValue());
+    }*/
+
+    // 3. Top 3 developers not working for the company of the released app
+    Map <String, Integer> developerAppCount = new HashMap<>();
+
+    for(GoogleApps t : apps){
+        //splitam poslije ludog A i poredim sa company name, ako nije isto push kao key njegov id i value 1, ili povecaj ako se opet pojavi
+
+        String companyName = t.getAppId().split("\\.")[1].toLowerCase().trim();
+        String mailChecker = t.getDeveloperEmail().split("@")[1].toLowerCase().split("\\.")[0].trim();
+
+        System.out.println("comp " + companyName + " - mail : " + mailChecker);
+
     }
 
-    //alen
 
     // Kraj maina - ispod pisi test kod
 
-        /*for(GoogleApps t : apps){
-            System.out.println(t);
-        }*/
     }
 }
 
